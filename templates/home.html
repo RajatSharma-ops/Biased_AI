@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BiasGuard - Home</title>
+
+    <!-- External Libraries -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+    <!-- Local Static CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}" />
+  </head>
+  <body>
+    <header class="header">
+      <a href="{{ url_for('home') }}" class="logo"><span>B</span>iasGuard</a>
+      <nav class="navbar">
+        <a href="#about">home</a>
+        <a href="#price">price</a>
+        <a href="#about">about</a>
+        <a href="#footer">contact</a>
+        <a href="{{ url_for('submit_model') }}" class="btn-nav">Try Demo</a>
+      </nav>
+      <div id="menu-bars" class="fas fa-bars"></div>
+    </header>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+      <h1 class="heading"><span>About</span> Us</h1>
+      <div class="top1">
+        <div class="top2">
+          <h3>We ensure there is no bias in your model</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- Image Grid -->
+    <section class="bento-wrap">
+      <div class="bento-grid">
+        <article class="tile"><img src="{{ url_for('static', filename='images/gptBias.png') }}" alt=""></article>
+        <article class="tile wide"><img src="{{ url_for('static', filename='images/AI_bias_discrimination.jpg') }}" alt=""></article>
+        <article class="tile"><img src="{{ url_for('static', filename='images/AI-bias-chart.jpg') }}" alt=""></article>
+        <article class="tile"><img src="{{ url_for('static', filename='images/AI_piechart.webp') }}" alt=""></article>
+        <article class="tile"><img src="{{ url_for('static', filename='images/AI_Bias_piechart2.jpg') }}" alt=""></article>
+        <article class="tile"><img src="{{ url_for('static', filename='images/AI_bias_popularity.png') }}" alt=""></article>
+      </div>
+    </section>
+
+    <!-- About Expanded -->
+    <section class="about" id="about">
+      <h1 class="heading"><span>About</span> Us</h1>
+      <div class="row">
+        <div class="image">
+          <img src="{{ url_for('static', filename='images/about-img.jpg') }}" alt="" />
+        </div>
+        <div class="content">
+          <h3>We ensure there is no bias in your model</h3>
+          <p>
+            BiasGuard is designed as a general-purpose, domain-agnostic, and lightweight tool crafted
+            to detect and analyse biases within trained Machine Learning models. Our Minimum Viable
+            Product (MVP) specifically targets the critical Human Resources use-case, focusing on
+            identifying gender bias in hiring processes.
+          </p>
+          <p>
+            Users can easily upload their trained ML models and corresponding datasets. BiasGuard processes
+            the data to identify and quantify potential biases. The system generates comprehensive reports
+            detailing fairness metrics and actionable suggestions.
+          </p>
+          <a href="#footer" class="btn">contact us</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Metrics Sections -->
+    <section class="Accuracy">
+      <h1 class="heading"><span>Metrics</span> We Use</h1>
+      <div class="row">
+        <div class="image"><img src="{{ url_for('static', filename='images/Accuracy_metric.jpg') }}" alt=""></div>
+        <div class="content">
+          <h3>The metrics we use to check for bias are:</h3>
+          <p><span>Accuracy</span> : proportion of correctly predicted observations.</p>
+          <p>Formula: Accuracy = (TP + TN) ÷ (TP + TN + FP + FN)</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="demographic">
+      <div class="row">
+        <div class="image"><img src="{{ url_for('static', filename='images/demographic_metric.jpg') }}" alt=""></div>
+        <div class="content">
+          <p><span>Demographic Parity Diff:</span> checks if predictions are independent of sensitive attributes.</p>
+          <p>DPD = 0 → fair, |DPD| large → stronger disparity.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="equal">
+      <div class="row">
+        <div class="image"><img src="{{ url_for('static', filename='images/equal_metric.jpg') }}" alt=""></div>
+        <div class="content">
+          <p><span>Equality Opportunity Diff:</span> ensures qualified individuals are equally recognized.</p>
+          <p>EOD = 0 → fair; EOD < 0 → unprivileged disadvantaged; EOD > 0 → privileged disadvantaged.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="disparate">
+      <div class="row">
+        <div class="image"><img src="{{ url_for('static', filename='images/disparate_metricjpg.jpg') }}" alt=""></div>
+        <div class="content">
+          <p><span>Disparate Impact:</span> measures if groups receive positive outcomes at similar rates.</p>
+          <p>Rule: DI ≥ 0.8 → fair; DI < 0.8 → potential bias.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Submit CTA -->
+    <section class="submit-section">
+      <div class="submit-box">
+        <h2>Ready to Submit Your Model?</h2>
+        <p>Once you’re happy with your uploaded model, click below to proceed.</p>
+        <button class="submit-btn" onclick="window.location.href='{{ url_for('submit_model') }}'">
+          🚀 Submit Model
+        </button>
+      </div>
+    </section>
+    <!-- Pricing Section -->
+    <section class="price" id="price">
+      <h1 class="heading">our <span>price</span></h1>
+      <div class="box-container">
+        <div class="box">
+          <h3 class="title">Trial</h3>
+          <h3 class="amount">$0</h3>
+          <ul>
+            <li><i class="fas fa-check"></i> free </li>
+            <li><i class="fas fa-check"></i> detects biasness</li>
+            <li><i class="fas fa-check"></i> no review</li>
+            <li><i class="fas fa-check"></i> no suggestions</li>
+            <li><i class="fas fa-check"></i> not programmable</li>
+          </ul>
+          <a href="{{ url_for('payment') }}" class="btn">check out</a>
+        </div>
+        <div class="box">
+          <h3 class="title">for 1 month</h3>
+          <h3 class="amount">$4.99</h3>
+          <ul>
+            <li><i class="fas fa-check"></i> full services</li>
+            <li><i class="fas fa-check"></i> personal review</li>
+            <li><i class="fas fa-check"></i> suggestions & feedback</li>
+            <li><i class="fas fa-check"></i> AI integration</li>
+            <li><i class="fas fa-check"></i> chatbot</li>
+          </ul>
+          <a href="{{ url_for('payment') }}" class="btn">check out</a>
+        </div>
+        <div class="box">
+          <h3 class="title">for 3 months</h3>
+          <h3 class="amount">$19.99</h3>
+          <ul>
+            <li><i class="fas fa-check"></i> full services</li>
+            <li><i class="fas fa-check"></i> personal review</li>
+            <li><i class="fas fa-check"></i> suggestions & feedback</li>
+            <li><i class="fas fa-check"></i> AI integration</li>
+            <li><i class="fas fa-check"></i> chatbot</li>
+          </ul>
+          <a href="{{ url_for('payment') }}" class="btn">check out</a>
+        </div>
+        <div class="box">
+          <h3 class="title">for 1 year</h3>
+          <h3 class="amount">$49.99</h3>
+          <ul>
+            <li><i class="fas fa-check"></i> full services</li>
+            <li><i class="fas fa-check"></i> personal review</li>
+            <li><i class="fas fa-check"></i> suggestions & feedback</li>
+            <li><i class="fas fa-check"></i> AI integration</li>
+            <li><i class="fas fa-check"></i> chatbot</li>
+          </ul>
+          <a href="{{ url_for('payment') }}" class="btn">check out</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <section class="footer" id="footer">
+      <div class="box-container">
+        <div class="box">
+          <h3>branches</h3>
+          <a href="#">Mumbai</a>
+          <a href="#">Delhi</a>
+          <a href="#">Indirapuram</a>
+          <a href="#">Backlund</a>
+          <a href="#">Andheri</a>
+        </div>
+        <div class="box">
+          <h3>quick links</h3>
+          <a href="#">Home</a>
+          <a href="#">service</a>
+          <a href="#">about</a>
+          <a href="#">gallery</a>
+          <a href="#">price</a>
+          <a href="#">review</a>
+          <a href="#">contact</a>
+        </div>
+        <div class="box">
+          <h3>contact info</h3>
+          <a href="#"><i class="fas fa-phone"></i> +123-456-7890</a>
+          <a href="#"><i class="fas fa-phone"></i> +111-222-3334</a>
+          <a href="#"><i class="fas fa-envelope"></i> contactus@biasguard.co.in</a>
+          <a href="#"><i class="fas fa-envelope"></i> support@biasguard.co.in</a>
+          <a href="#"><i class="fas fa-map-marker-alt"></i> Delhi, India --- 091822</a>
+        </div>
+        <div class="box">
+          <h3>follow us</h3>
+          <a href="#">facebook</a>
+          <a href="#">twitter</a>
+          <a href="#">instagram</a>
+          <a href="#">linkedin</a>
+        </div>
+      </div>
+      <div class="footer-bottom" style="text-align:center; margin-top:20px; color:#fff; font-size:14px;">
+        &copy; 2025 BiasGuard. All Rights Reserved.
+      </div>
+    </section>
+
+    <!-- Local JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

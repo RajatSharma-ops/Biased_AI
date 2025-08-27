@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BiasGuard</title>
+
+  <!-- Local CSS (served from static/) -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='hero.css') }}" />
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}" />
+</head>
+
+<body>
+  <!-- Background animation -->
+  <canvas id="bg"></canvas>
+
+  <!-- Hero Section -->
+  <section class="landing">
+    <div class="content">
+      <h1>BIAS GUARD</h1>
+      <h1>Test AI Bias <span>See The Truth Behind Models</span></h1>
+      <p>
+        Upload your model and uncover hidden bias in seconds. Interactive,
+        fast, and privacy-first.
+      </p>
+      <button class="cta-btn" id="ctaBtn" onclick="window.location.href='{{ url_for('home') }}'">
+        🚀 Get Started
+      </button>
+    </div>
+  </section>
+
+  <!-- Local JS -->
+  <script src="{{ url_for('static', filename='hero.js') }}"></script>
+</body>
+
+</html>
