@@ -29,8 +29,10 @@ except ImportError:
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_DIR = os.path.join(BASE_DIR, "uploads")
 REPORT_DIR = os.path.join(BASE_DIR, "reports")
+CHART_DIR = os.path.join(BASE_DIR, "static", "charts")
 ALLOWED_EXTENSIONS = {"csv"}
 
+os.makedirs(CHART_DIR, exist_ok=True)
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 os.makedirs(REPORT_DIR, exist_ok=True)
 
@@ -157,7 +159,7 @@ def results():
         chart_name = f"chart_{uid}.png"
         chart_path = _save_chart_return_path(
             plot_selection_rates(y_pred, A_test),
-            os.path.join(REPORT_DIR, chart_name)
+            os.path.join(CHART_DIR, chart_name)
         )
 
         # --- 6. Report ---
@@ -183,7 +185,7 @@ def results():
             model_name=model_name,
             metrics=_to_native(metrics),
             group_rates=_to_native(group_rates),   # dict for Jinja
-            chart_url=url_for("get_report", filename=os.path.basename(chart_path)),
+            chart_url = url_for("static", filename=f"charts/{chart_name}"),
             report_url=url_for("get_report", filename=os.path.basename(final_report))
         )
 
@@ -232,7 +234,7 @@ def run_bias():
         chart_name = f"chart_{uid}.png"
         chart_path = _save_chart_return_path(
             plot_selection_rates(y_pred, A_test),
-            os.path.join(REPORT_DIR, chart_name)
+            os.path.join(CHART_DIR, chart_name)
         )
 
         report_name = f"report_{uid}.pdf"
@@ -247,7 +249,7 @@ def run_bias():
             output_path=report_path
         )
         if not final_report or not os.path.exists(final_report):
-            final_report = report_path
+            final_report = chart_path
 
         return jsonify({
             "ok": True,
