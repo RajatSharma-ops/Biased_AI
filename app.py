@@ -114,7 +114,6 @@ def payment():
 def get_report(filename):
     return send_from_directory(REPORT_DIR, filename, as_attachment=False)
 
-
 @app.route("/results", methods=["POST"])
 def results():
     print(">>> POST /results HIT")
@@ -137,55 +136,55 @@ def results():
         flash("Please fill all fields", "error")
         return redirect(url_for("submit_model"))
 
-    # --- 3. Save uploaded CSV ---
     uid = str(uuid.uuid4())[:8]
     file_path = os.path.join(UPLOAD_DIR, f"{uid}_{secure_filename(file.filename)}")
     file.save(file_path)
 
     try:
-        # --- 4. Preprocess + train ---
+        # --- Preprocess ---
         X_train, X_test, y_train, y_test, A_train, A_test = preprocess_dataset(
             file_path, target_col, sensitive_col
         )
-        models = train_models(X_train, y_train)
-        if model_name not in models:
+
+        # --- Train only requested model ---
+        model = train_models(X_train, y_train).get(model_name)
+        if model is None:
             flash(f"Model '{model_name}' not available", "error")
             return redirect(url_for("submit_model"))
 
-        model = models[model_name]
+        # --- Evaluate ---
         metrics, group_rates, y_pred = evaluate_bias(model, X_test, y_test, A_test)
 
-        # --- 5. Chart ---
+        # --- Chart ---
         chart_name = f"chart_{uid}.png"
         chart_path = _save_chart_return_path(
             plot_selection_rates(y_pred, A_test),
             os.path.join(CHART_DIR, chart_name)
         )
 
-        # --- 6. Report ---
+        # --- Minimal report (optional, lightweight PDF) ---
         report_name = f"report_{uid}.pdf"
         report_path = os.path.join(REPORT_DIR, report_name)
         final_report = generate_report(
             metrics=_to_native(metrics),
             chart_path=chart_path,
-            group_rates=group_rates,        # pass raw object to report
+            group_rates=group_rates,
             sensitive_col=sensitive_col,
             chosen_model_name=model_name,
             sensitive_series=A_test,
             output_path=report_path
         )
-        if not final_report or not os.path.exists(final_report):
-            final_report = report_path
 
-        print(">>> Report saved at:", final_report)
+        # --- Clean up large variables ---
+        del X_train, X_test, y_train, y_test, A_train, A_test, y_pred, model
 
-        # --- 7. Render results page ---
+        # --- Render results ---
         return render_template(
             "results.html",
             model_name=model_name,
             metrics=_to_native(metrics),
-            group_rates=_to_native(group_rates),   # dict for Jinja
-            chart_url = url_for("static", filename=f"charts/{chart_name}"),
+            group_rates=_to_native(group_rates),
+            chart_url=url_for("static", filename=f"charts/{chart_name}"),
             report_url=url_for("get_report", filename=os.path.basename(final_report))
         )
 
